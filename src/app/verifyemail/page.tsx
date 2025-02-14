@@ -17,8 +17,11 @@ export default function VerifyEmailPage() {
         try {
             const endpoint = isPasswordReset ? '/api/auth/verifyToken' : '/api/auth/verifyemail';
             const response = await axios.post(endpoint, { token });
-            setUser(response?.data?.data?.id)
-            setVerified(true);
+            if (response?.data?.success == true) {
+                setUser(response?.data?.data?.id)
+                setVerified(true);
+            }
+
         } catch (error: any) {
             setError(true);
         }
@@ -41,7 +44,7 @@ export default function VerifyEmailPage() {
 
     useEffect(() => {
         if (verified && isPasswordReset && user) {
-            alert(`/resetpassword/${user}`)
+
             router.push(`/resetpassword/${user}`);
         }
     }, [verified, isPasswordReset, router, user]);
@@ -58,7 +61,7 @@ export default function VerifyEmailPage() {
             )}
             {error && (
                 <div>
-                    <h2 className="text-2xl bg-red-500 text-black">Error</h2>
+                    <h2 className="mt-4 text-2xl bg-red-500 text-black">Cant Verify,Try Again</h2>
                 </div>
             )}
         </div>
