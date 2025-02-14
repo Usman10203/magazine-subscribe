@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function VerifyEmailPage() {
     const [token, setToken] = useState("");
@@ -20,6 +21,7 @@ export default function VerifyEmailPage() {
             if (response?.data?.success == true) {
                 setUser(response?.data?.data?.id)
                 setVerified(true);
+                toast.success('Email Verified Successfully')
             }
 
         } catch (error: any) {
